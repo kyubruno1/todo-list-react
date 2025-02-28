@@ -1,0 +1,63 @@
+.container {
+    margin: 0 auto;
+    width: 750px;
+}
+
+.taskWrapper {
+    
+}
+
+.taskHeader {
+    display: flex;
+    justify-content: space-between;
+    margin: 4rem 0 1.5rem 0;
+}
+
+.taskHeader p {
+    color: var(--blue);
+    font-weight: bold;
+    font-size: 0.875rem;
+}
+
+.taskHeader p + p {
+    color: var(--purple);
+
+}
+
+.taskHeader span {
+    background: var(--gray-400);
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--gray-200);
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* .taskBoard {
+    display: flex;
+    justify-content: center;
+} */
+
+.noTask {
+    border-top: 1px solid var(--gray-400);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    color: var(--gray-300);
+    font-size: 1rem;
+    line-height: 1.4;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 0 0 0;
+}
+
+
+.noTask svg {
+    margin-bottom: 1rem;
+}
+
+.noTask p:first-of-type {
+    font-weight: bold;
+}
