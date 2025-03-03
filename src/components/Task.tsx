@@ -9,6 +9,7 @@ interface TaskType {
 }
 
 export function Task(task:TaskType) {
+
     return (
         <div className={styles.task}>
             <Checkbox />

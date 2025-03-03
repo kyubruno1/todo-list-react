@@ -5,12 +5,13 @@ import { Task } from './components/Task'
 import './global.css'
 import styles from './App.module.css'
 
-import { ClipboardText } from 'phosphor-react'
+import { ClipboardText, PlusCircle } from 'phosphor-react'
 import { v4 as uuidv4 } from 'uuid';
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 export function App() {
 
-  const posts: any[] = [{
+  const [tasks, setTasks] = useState([{
     id: uuidv4(),
     content: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
     completed: false
@@ -20,23 +21,56 @@ export function App() {
       content: 'Comentário bacana',
       completed: true
     },
-  ];
+  ]);
 
-  const completedCount = posts.reduce((count, post) => post.completed ? count + 1 : count, 0);
+  const [newTaskText, setNewTaskText]= useState('')
 
+  function handleNewCommentChange(event: ChangeEvent<HTMLInputElement>) {
+    event.preventDefault()
+    console.log(event.target.value)
+    setNewTaskText(event.target.value)
+  }
+
+
+  function handleNewComment(event: FormEvent) {
+    event.preventDefault();
+
+
+    const newTask = {
+      id: uuidv4(),
+      content: newTaskText,
+      completed: false
+    }
+    
+    setTasks([...tasks, newTask])
+  }
+
+
+  const completedCount = tasks.reduce((count, post) => post.completed ? count + 1 : count, 0);
 
   return (
     <>
     <Header />
     <div className={styles.container}>
-      <Input/>
+      {/* <Input/> */}
+      <div>
+            <form className={styles.wrapper}
+            onSubmit={handleNewComment}>
+                <input type="text" placeholder="Adicione uma nova tarefa"
+                value={newTaskText}
+                onChange={handleNewCommentChange}
+                />
+                <button className={styles.createTask}>Criar<PlusCircle size={16} 
+                /></button>
+            </form>
+        </div>
         <div className={styles.taskHeader}> 
-          <p>Tarefas criadas <span>{posts.length}</span></p>
-          <p>Concluidas <span>{completedCount} de {posts.length}</span></p>
+          <p>Tarefas criadas <span>{tasks.length}</span></p>
+          <p>Concluidas <span>{completedCount} de {tasks.length}</span></p>
         </div>
             {
-            posts.length > 0 ? (
-              posts.map(post => <Task 
+            tasks.length > 0 ? (
+              tasks.map(post => <Task 
                 id={post.id} 
                 content={post.content}
                 completed={post.completed}
