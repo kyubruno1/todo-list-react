@@ -1,17 +1,20 @@
 import styles from './Checkbox.module.css'
 import { CheckCircle } from 'phosphor-react'
-export function Checkbox() {
-  
+export function Checkbox({completed: boolean}) {
+
     function handleOnClickCheckbox() {
-        // alert('Clicou')
-        // console.log(event.target)
-        // event.target.classList.add('completed');
+
     }
 
-    return (
-        <span onClick={handleOnClickCheckbox}><CheckCircle size={32} /></span>
-    )
 
+
+    let checkbox;
+    if (completed) {
+        checkbox = <span className={styles.checkbox } onClick={handleOnClickCheckbox}> ✓ </span>
+    } else {
+        checkbox = <span className={styles.checkbox } onClick={handleOnClickCheckbox}>  </span>
+    }
+    return checkbox;
 
 
 

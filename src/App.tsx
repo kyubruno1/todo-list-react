@@ -9,6 +9,8 @@ import { ClipboardText, PlusCircle } from 'phosphor-react'
 import { v4 as uuidv4 } from 'uuid';
 import { ChangeEvent, FormEvent, useState } from 'react'
 
+
+
 export function App() {
 
   const [tasks, setTasks] = useState([{
@@ -27,23 +29,29 @@ export function App() {
 
   function handleNewCommentChange(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault()
-    console.log(event.target.value)
     setNewTaskText(event.target.value)
   }
 
 
   function handleNewComment(event: FormEvent) {
     event.preventDefault();
-
-
     const newTask = {
       id: uuidv4(),
       content: newTaskText,
       completed: false
     }
-    
     setTasks([...tasks, newTask])
+    setNewTaskText('')
+
   }
+
+  function onDeleteTask(idToDelete: string) {
+    const idWithoutDeletedOne = tasks.filter(task => {
+      return task.id !== idToDelete;
+    })
+    setTasks(idWithoutDeletedOne)
+  }
+
 
 
   const completedCount = tasks.reduce((count, post) => post.completed ? count + 1 : count, 0);
@@ -70,10 +78,10 @@ export function App() {
         </div>
             {
             tasks.length > 0 ? (
-              tasks.map(post => <Task 
-                id={post.id} 
-                content={post.content}
-                completed={post.completed}
+              tasks.map(task => <Task 
+                key={task.id}
+                task={task} //aqui passo a task completa porque recebo ela inteira 
+                onDeleteTask={onDeleteTask}
                 />)
             ) : (
              <div className={styles.noTask}>
