@@ -4,11 +4,26 @@ import { Task } from './components/Task'
 
 import './global.css'
 import styles from './App.module.css'
+
 import { ClipboardText } from 'phosphor-react'
+import { v4 as uuidv4 } from 'uuid';
 
 export function App() {
 
-  const posts: any[] = [1,2,3,4,5];
+  const posts: any[] = [{
+    id: uuidv4(),
+    content: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.',
+    completed: false
+    },
+    {
+      id: uuidv4(),
+      content: 'Comentário bacana',
+      completed: true
+    },
+  ];
+
+  const completedCount = posts.reduce((count, post) => post.completed ? count + 1 : count, 0);
+
 
   return (
     <>
@@ -16,12 +31,16 @@ export function App() {
     <div className={styles.container}>
       <Input/>
         <div className={styles.taskHeader}> 
-          <p>Tarefas criadas <span>0</span></p>
-          <p>Concluidas <span>0</span></p>
+          <p>Tarefas criadas <span>{posts.length}</span></p>
+          <p>Concluidas <span>{completedCount} de {posts.length}</span></p>
         </div>
             {
             posts.length > 0 ? (
-              posts.map(post => <Task key={post.id} />)
+              posts.map(post => <Task 
+                id={post.id} 
+                content={post.content}
+                completed={post.completed}
+                />)
             ) : (
              <div className={styles.noTask}>
                 <ClipboardText size={56} />

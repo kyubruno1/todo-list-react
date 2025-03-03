@@ -1,10 +1,19 @@
 import { Trash } from 'phosphor-react'
 import styles from './Task.module.css'
-export function Task() {
+import { Checkbox } from './Checkbox'
+
+interface TaskType {
+    id: string,
+    content: string,
+    completed: boolean
+}
+
+export function Task(task:TaskType) {
     return (
         <div className={styles.task}>
-            <span> </span>
-            <p>Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.</p>
+            <Checkbox />
+            {/* <span className={task.completed ? styles.completed : styles.uncompleted}> </span> */}
+            <p>{task.content}</p>
             <Trash size={25} />
         </div>
     )
