@@ -1,5 +1,4 @@
 import { Header } from './components/Header'
-import { Input } from './components/Input'
 import { Task } from './components/Task'
 
 import './global.css'
@@ -52,6 +51,19 @@ export function App() {
     setTasks(idWithoutDeletedOne)
   }
 
+  function onToggleTask(id: string, completed: boolean) {
+    console.log(id, completed)
+
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, completed }
+      }
+
+      return { ...task }
+    })
+
+    setTasks(updatedTasks)
+  }
 
 
   const completedCount = tasks.reduce((count, post) => post.completed ? count + 1 : count, 0);
@@ -60,7 +72,6 @@ export function App() {
     <>
     <Header />
     <div className={styles.container}>
-      {/* <Input/> */}
       <div>
             <form className={styles.wrapper}
             onSubmit={handleNewComment}>
@@ -80,8 +91,9 @@ export function App() {
             tasks.length > 0 ? (
               tasks.map(task => <Task 
                 key={task.id}
-                task={task} //aqui passo a task completa porque recebo ela inteira 
+                task={task} //aqui passo a task completa porque recebo ela inteira no componente
                 onDeleteTask={onDeleteTask}
+                onToggleTask={onToggleTask}
                 />)
             ) : (
              <div className={styles.noTask}>
